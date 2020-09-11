@@ -2,32 +2,37 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Header from './src/components/Header';
+import axios from 'axios';
+import PeopleList from './src/components/PeopleList';
 
-export default function App() {
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
 
-  const renderList = () => {
-    const names = [
-      'Felipe',
-      'Luísa',
-      'Poliana',
-      'Otávio',
-      'Eliane',
-      'Claudemir'
-    ]
+    this.state = {
+      peoples: []
+    }
+  };
 
-    const textElements = names.map(name => {
-      return <Text key={name}>{name}</Text>
-    })
+  componentDidMount() {
+    axios
+      .get(`https://randomuser.me/api?nat=br&results=5`)
+      .then(response => {
+        const { results } = response.data;
+        this.setState({
+          peoples: results
+        })
 
-    return textElements;
+      })
   }
 
-  return (
-    <View>
-      <Header title="People" />
-      <StatusBar style="auto" />
-      {renderList()}
-    </View>
-  );
+  render() {
+    return (
+      <View>
+        <StatusBar style="auto" />
+        <Header title="People" />
+        <PeopleList peoples={this.state.peoples}/>
+      </View>
+    );
+  }
 }
-
