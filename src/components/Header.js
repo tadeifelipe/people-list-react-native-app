@@ -12,7 +12,7 @@ const Header = props => {
 const style = StyleSheet.create({
      container: {
           marginTop: 20,
-          backgroundColor: '#323286',
+          backgroundColor: '#192a56',
           alignItems: 'center',
           justifyContent: 'center'
      },
